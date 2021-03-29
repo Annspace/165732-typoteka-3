@@ -1,7 +1,7 @@
 # Личный проект «Типотека» [![Build status][travis-image]][travis-url]
 
 * Студент: [Анна Куренкова](https://up.htmlacademy.ru/nodejs/3/user/165732).
-* Наставник: Дмитрий Мирошниченко.
+* Наставник: [Дмитрий Мирошниченко](https://htmlacademy.ru/profile/id591417).
 
 ---
 
