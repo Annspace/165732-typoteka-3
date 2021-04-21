@@ -57,8 +57,8 @@ const CATEGORIES = [
 ];
 
 const ExitCode = {
-  success: 0,
-  error: 1,
+  SUCCESS: 0,
+  ERROR: 1,
 };
 
 module.exports = {

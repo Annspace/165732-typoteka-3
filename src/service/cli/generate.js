@@ -21,11 +21,11 @@ const writeToFile = (data, fileName = FILE_NAME) => {
   fs.writeFile(fileName, data, (err) => {
     if (err) {
       console.error(`Can't write data to file...`);
-      process.exit(ExitCode.error);
+      process.exit(ExitCode.ERROR);
     }
 
     console.info(`Operation success. File created.`);
-    process.exit(ExitCode.success);
+    process.exit(ExitCode.SUCCESS);
   });
 };
 
@@ -34,7 +34,7 @@ const run = (count) => {
 
   if (countOffer > MAX_OFFERS) {
     console.info(`Не больше 1000 публикаций`);
-    process.exit(ExitCode.success);
+    process.exit(ExitCode.ERROR);
   }
 
   const content = JSON.stringify(generateOffers(countOffer));

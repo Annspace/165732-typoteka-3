@@ -15,7 +15,7 @@ const count = userArguments[1];
 
 if (userArguments.length === 0 || !cli[userCommand]) {
   cli[DEFAULT_COMMAND].run();
-  process.exit(ExitCode.success);
+  process.exit(ExitCode.SUCCESS);
 }
 
 cli[userCommand].run(count);
