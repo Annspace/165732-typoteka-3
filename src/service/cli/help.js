@@ -1,5 +1,7 @@
 'use strict';
 
+const chalk = require(`chalk`);
+
 const helpText = `Программа запускает http-сервер и формирует файл с данными для API.
           Гайд:
           service.js <command>
@@ -10,7 +12,7 @@ const helpText = `Программа запускает http-сервер и ф�
           --generate <count>    формирует файл mocks.json
     `;
 
-const run = () => console.info(helpText);
+const run = () => console.info(chalk.grey(helpText));
 
 module.exports = {
   name: `--help`,
