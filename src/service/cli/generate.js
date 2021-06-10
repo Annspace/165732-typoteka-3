@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require(`fs`);
+const chalk = require(`chalk`);
 
 const {MAX_OFFERS, ExitCode, TITLES, CATEGORIES, SENTENCES, FILE_NAME, DEFAULT_COUNT} = require(`../../constants`);
 
@@ -16,30 +17,26 @@ const generateOffers = (count) => (
   }))
 );
 
-const writeToFile = (data, fileName = FILE_NAME) => {
-
-  fs.writeFile(fileName, data, (err) => {
-    if (err) {
-      console.error(`Can't write data to file...`);
-      process.exit(ExitCode.ERROR);
-    }
-
-    console.info(`Operation success. File created.`);
-    process.exit(ExitCode.SUCCESS);
-  });
+const writeToFile = async (data, fileName = FILE_NAME) => {
+  try {
+    await fs.writeFile(fileName, data);
+    console.info(chalk.green(`Operation success. File created.`));
+  } catch (e) {
+    throw new Error(chalk.red(`Can't write data to file...`));
+  }
 };
 
-const run = (count) => {
+const run = async (count) => {
   const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
 
   if (countOffer > MAX_OFFERS) {
-    console.info(`Не больше 1000 публикаций`);
+    console.info(chalk.red(`Не больше 1000 публикаций`));
     process.exit(ExitCode.ERROR);
   }
 
   const content = JSON.stringify(generateOffers(countOffer));
 
-  writeToFile(content);
+  await writeToFile(content);
 
 };
 
