@@ -1,19 +1,20 @@
 'use strict';
 
-const fs = require(`fs`);
+const fs = require(`fs`).promises;
 const chalk = require(`chalk`);
 
-const {MAX_OFFERS, ExitCode, TITLES, CATEGORIES, SENTENCES, FILE_NAME, DEFAULT_COUNT} = require(`../../constants`);
+const {MAX_OFFERS, ExitCode, FILE_NAME, FILE_SENTENCES_PATH, FILE_TITLES_PATH, FILE_CATEGORIES_PATH, DEFAULT_COUNT}
+= require(`../../constants`);
 
 const {getRandomInt, shuffle, getRandomDate} = require(`../../utils`);
 
-const generateOffers = (count) => (
+const generateOffers = (count, titles, categories, sentences) => (
   Array(count).fill({}).map(() => ({
-    title: TITLES[getRandomInt(0, TITLES.length - 1)],
+    title: titles[getRandomInt(0, titles.length - 1)],
     createdDate: getRandomDate(3),
-    announce: shuffle(SENTENCES).slice(1, getRandomInt(2, 5)).join(` `),
-    fullText: shuffle(SENTENCES).slice(1, getRandomInt(2, SENTENCES.length - 1)).join(` `),
-    category: shuffle(CATEGORIES).slice(1, getRandomInt(2, CATEGORIES.length - 1)),
+    announce: shuffle(sentences).slice(1, getRandomInt(2, 5)).join(` `),
+    fullText: shuffle(sentences).slice(1, getRandomInt(2, sentences.length - 1)).join(` `),
+    category: shuffle(categories).slice(1, getRandomInt(2, categories.length - 1)),
   }))
 );
 
@@ -26,6 +27,15 @@ const writeToFile = async (data, fileName = FILE_NAME) => {
   }
 };
 
+const readFromFile = async (filePath) => {
+  try {
+    const content = await fs.readFile(filePath, `utf8`);
+    return content.split(`\n`);
+  } catch (err) {
+    throw new Error(chalk.red(err));
+  }
+};
+
 const run = async (count) => {
   const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
 
@@ -34,7 +44,15 @@ const run = async (count) => {
     process.exit(ExitCode.ERROR);
   }
 
-  const content = JSON.stringify(generateOffers(countOffer));
+  const [sentences, titles, categories] = await Promise.all([
+    readFromFile(FILE_SENTENCES_PATH),
+    readFromFile(FILE_TITLES_PATH),
+    readFromFile(FILE_CATEGORIES_PATH)
+  ]);
+
+  const content = JSON.stringify(generateOffers(countOffer, titles, categories, sentences));
+
+  console.log(titles);
 
   await writeToFile(content);
 
