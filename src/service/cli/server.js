@@ -49,7 +49,6 @@ const onClientConnect = async (req, res) => {
 };
 
 const run = (customPort) => {
-  console.log(customPort);
   const port = Number.parseInt(customPort, 10) || DEFAULT_PORT;
   http.createServer(onClientConnect)
     .listen(port)
