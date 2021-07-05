@@ -31,8 +31,8 @@ const readFromFile = async (filePath) => {
   try {
     const content = await fs.readFile(filePath, `utf8`);
     return content.split(`\n`);
-  } catch (err) {
-    throw new Error(chalk.red(err));
+  } catch (e) {
+    throw new Error(chalk.red(e));
   }
 };
 
@@ -51,8 +51,6 @@ const run = async (count) => {
   ]);
 
   const content = JSON.stringify(generateOffers(countOffer, titles, categories, sentences));
-
-  console.log(titles);
 
   await writeToFile(content);
 
