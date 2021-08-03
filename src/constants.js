@@ -2,6 +2,7 @@
 
 const DEFAULT_COUNT = 1;
 const DEFAULT_PORT = 3000;
+const DEFAULT_PORT_EXPRESS = 8080;
 const FILE_NAME = `mocks.json`;
 const DEFAULT_COMMAND = `--help`;
 const USER_ARGV_INDEX = 2;
@@ -29,6 +30,7 @@ module.exports = {
   USER_ARGV_INDEX,
   DEFAULT_COUNT,
   DEFAULT_PORT,
+  DEFAULT_PORT_EXPRESS,
   ExitCode,
   HttpCode,
   MAX_OFFERS,
